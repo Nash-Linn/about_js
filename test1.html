@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container"></div>
+
+  <style>
+    .container {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .target {
+        margin: 5px;
+        width: 200px;
+        height: 200px;
+        background: red;
+    }
+  </style>
+
+
+  <script>
+    const $container = document.querySelector(".container");
+
+    console.log('$container',$container)
+
+    function createTargets() {
+      const htmlString = new Array(1000)
+        .fill('<div class="target"></div>')
+        .join("");
+
+      $container.innerHTML = htmlString
+    }
+
+    createTargets()
+
+    // 使用 IntersectionObserver  当 target 元素在视口中时 将背景变为绿色
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.background = "green";
+        } else {
+          entry.target.style.background = "red";
+        }
+      });
+    });
+
+    const targets = document.querySelectorAll(".target");
+    targets.forEach((target) => {
+      observer.observe(target);
+    });
+
+  </script>
+</body>
+</html>

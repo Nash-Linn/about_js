@@ -17,16 +17,21 @@
   这样，子类的实例就可以正确地访问到父类原型上的属性和方法，同时还能保持正确的构造函数引用。
 */
 
-function clone(o) {
-  function F() {}
-  F.prototype = o;
-  return new F();
-}
+// function clone(o) {
+//   function F() {}
+//   F.prototype = o;
+//   return new F();
+// }
+
+// function inheritPrototype(child, parent) {
+//   let prototype = clone(parent.prototype);
+//   prototype.constructor = child;
+//   child.prototype = prototype;
+// }
 
 function inheritPrototype(child, parent) {
-  let prototype = clone(parent.prototype);
-  prototype.constructor = child;
-  child.prototype = prototype;
+  child.prototype = Object.create(parent.prototype);
+  child.prototype.constructor = child;
 }
 
 function Animal(name) {

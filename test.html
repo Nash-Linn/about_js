@@ -1,104 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  <button id="btn">按钮</button>
+  1231
+  <button id="btn">登录</button>
+  <iframe src="http://localhost:8800/test1.html" frameborder="0">112</iframe>
   <script>
-//     let sum1 = add(1)(2)(3);  
-//     console.log(sum1)
-//     let sum2 = add(1, 2, 3)(4);
-//     console.log(sum2)
-//     let sum3 = add(1)(2)(3)(4)(5);
-//     console.log(sum3)
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click', () => {
+      var result = {
+        data: {
+          token: '12312312312'
+        }
+      }
+
+      // 获取 token
+      var token = result.data.token;
+
+      // 动态创建一个不可见的iframe，在iframe中加载一个跨域HTML
+      var iframe = document.createElement("iframe");
+      iframe.src = "http://localhost:8800/test1.html";
+      document.body.append(iframe);
+      // 使用postMessage()方法将token传递给iframe
+      setTimeout(function () {
+        iframe.contentWindow.postMessage(token, "http://localhost:8800");
+      }, 4000);
+      setTimeout(function () {
+        iframe.remove();
+      }, 6000);
+    })
 
 
-//     function add() {
-//   // 将参数转化为数组
-//   let args = Array.prototype.slice.call(arguments);
-
-//   // 定义一个函数，接收新的参数并递归调用
-//   let fn = function() {
-//     let newArgs = args.concat(Array.prototype.slice.call(arguments));
-//     return add.apply(null, newArgs);
-//   }
-
-//   // 重写 toString 方法，当函数用于计算时，自动调用 toString 方法返回计算结果
-//   fn.toString = function() {
-//     return args.reduce((a, b) => a + b);
-//   }
-
-//   return fn;
-// }
-
-
-//   const whichEvent = (function () {
-//   if (window.addEventListener) {
-//     return function (el, type, fn, capture) {
-//       el.addEventListener(
-//         type,
-//         function (e) {
-//           fn.call(el, e);
-//         },
-//         capture
-//       );
-//     };
-//   } else if (window.attachEvent) {
-//     return function (el, type, fn) {
-//       el.attachEvent("on" + type, function (e) {
-//         fn.call(el, e);
-//       });
-//     };
-//   }
-// })();
-
-
-//   whichEvent(document.getElementById("btn"), "click", function (e) {
-//     console.log(e);
-//   })
-
-
-
-
-function addMethod(object, name, fn) {
-  // 保存对象上原有的同名方法
-  const old = object[name];
-  // 在对象上添加新的方法
-  object[name] = function (...args) {
-    // 如果新添加的方法的参数个数和实际传入的参数个数相同
-    if (fn.length === args.length) {
-      // 则调用新添加的方法
-      return fn.apply(this, args);
-    } else if (typeof old === "function") {
-      // 否则，如果原有的同名方法是一个函数
-      // 则调用原有的同名方法
-      return old.apply(this, args);
-    }
-  };
-}
-
-const searcher = {};
-
-addMethod(searcher, "getUsers", function () {
-  console.log("查询所有用户-");
-});
-
-addMethod(searcher, "getUsers", function (page, limit) {
-  console.log("根据页码和条数查询用户-");
-});
-
-addMethod(searcher, "getUsers", function (page) {
-  console.log("根据页码查询用户-");
-});
-
-searcher.getUsers(); //查询所有用户
-// searcher.getUsers(1, 10); //根据页码查询用户
-// searcher.getUsers(1); //根据页码查询用户
 
 
   </script>
 </body>
+
 </html>
